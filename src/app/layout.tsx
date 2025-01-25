@@ -19,7 +19,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="ko" cz-shortcut-listen="true">
       <body className={`antialiased ${barlowFont.variable}`}>{children}</body>
     </html>
   );
