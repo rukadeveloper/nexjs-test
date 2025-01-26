@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import styled from 'styled-components';
 
 const Buttons = styled.button`
@@ -22,12 +22,19 @@ const Buttons = styled.button`
         left: 50%;
         transform: translate(-50%,-50%);
     }
-`
+`;
 
-export default function NavigationButton() {
+
+export default function NavigationButton({ setSideMenu } : { setSideMenu : Dispatch<SetStateAction<boolean>> }) {
+
+    const sideMenuClick = () => {
+        setSideMenu(true);
+        document.body.classList.add('dimmed');
+    }
+
     return (
         <div className="line__button flex items-center">
-            <Buttons>
+            <Buttons onClick={sideMenuClick}>
                 <span className="sr-only">라인있는 내비게이션 버튼</span>
             </Buttons>
         </div>

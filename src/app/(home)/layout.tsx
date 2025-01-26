@@ -3,7 +3,7 @@ import React from 'react';
 
 export default function HomeLayout({ children } : { children : React.ReactNode }) {
   return (
-    <div className="root">
+    <div className="root relative">
         <Header />
         <main>{children}</main>
         <footer>1111</footer>

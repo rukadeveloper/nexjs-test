@@ -10,13 +10,13 @@ const Div = styled.div`
 `;
 
 const MypageButton = styled.button`
- width: 30px;
- height: 30px;
+ width: 40px;
+ height: 40px;
  background-image: url('https://c.011st.com/img/common/sprites/sp_gnb_2x_20241128_151508.png'); 
- background-size: 300px 300px;
- background-position: -568px -2px;
+ background-size: 350px 350px;
+ background-position: -659px 0px;
  &:hover {
-        background-position: -568px -42px;
+        background-position: -659px -47px;
  }
 `;
 

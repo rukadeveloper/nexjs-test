@@ -6,11 +6,11 @@ import React from 'react';
 import styled from 'styled-components';
 
 const HLogo = styled.h1`
-    width: 100px;
+    width: 90px;
     height: 44px;
     background: url('https://c.011st.com/img/common/sprites/sp_gnb_2x_20241128_151508.png') no-repeat;
-    background-position: -183px 3px;
-    background-size: 395px 333px;
+    background-position: -163px 4px;
+    background-size: 355px 313px;
     margin-left: 1.8rem;
 `;
 
