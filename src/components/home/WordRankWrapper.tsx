@@ -34,7 +34,7 @@ export default function WordRankWrapper() {
   },[])
 
   return (
-    <div className="word__rank__wrapper h-[24px] w-[240px] overflow-hidden ml-4">
+    <div className="word__rank__wrapper h-[24px] w-[240px] lg:block hidden  overflow-hidden ml-4">
       <div className="move" style={{ marginTop: `-${height}px`, transition: 'all .4s' }}>
       {
         wordData?.map((wd) => (

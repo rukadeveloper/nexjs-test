@@ -33,6 +33,9 @@ insert into Category3 (thirdName, thirdLink, category2Id) values ('디자이너 
 
 insert into Category3 (thirdName, thirdLink, category2Id) values ('캐주얼/유니섹스','/products/common/casualUnisex',3);
 insert into Category3 (thirdName, thirdLink, category2Id) values ('브랜드 언더웨어','/products/common/brandUnderWear',3);
+insert into Category3 (thirdName, thirdLink, category2Id) values ('브랜드 여행가방','/products/common/brandTravelBag',3);
+insert into Category3 (thirdName, thirdLink, category2Id) values ('브랜드 지갑/벨트','/products/common/brandWalletAndBelt',3);
+insert into Category3 (thirdName, thirdLink, category2Id) values ('브랜드 주얼리','/products/common/brandJewelry',3);
 
 insert into searchWord (wordName,wordSeeNumber) values ('사람입니다.',1);
 insert into searchWord (wordName,wordSeeNumber) values ('사람입니다.2',1);

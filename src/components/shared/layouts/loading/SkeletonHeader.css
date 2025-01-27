@@ -1,0 +1,17 @@
+.button__anime,
+.logo__anime,
+.input__anime,
+.rank__anime,
+.icon__anime {
+    animation: common 1s infinite alternate;
+}
+
+@keyframes common {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: .45
+    }
+}

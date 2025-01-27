@@ -1,6 +1,8 @@
+import { UserButton } from '@clerk/nextjs';
 import Link from 'next/link'
 import React, { Dispatch, SetStateAction } from 'react';
 import styled from 'styled-components';
+import MobileSearch from './MobileSearch';
 
 const Login = styled.div`
   position: relative;
@@ -20,7 +22,7 @@ const Login = styled.div`
         background-position: -110px -290px;
     }
   }  
-  button {
+  > button {
         position: absolute;
         right: 1rem;
         width: 40px;
@@ -39,12 +41,17 @@ export default function LoginPart({ setSideMenu } : { setSideMenu : Dispatch<Set
     document.body.classList.remove('dimmed');
   }
 
+  const notDimmed = () => {
+    document.body.classList.remove('dimmed');
+  }
+
   return (
-    <Login className="login__part box-border p-5 h-[70px] flex items-center text-xl font-bold">
-      <Link href="/login" className="pl-8">로그인</Link>
-      <button onClick={close}>
+    <Login className="login__part box-border p-5 h-[120px] lg:h-[70px] flex flex-col gap-5 justify-center text-xl font-bold">
+      <Link href="/login" className="pl-8 block w-full hover:underline" onClick={notDimmed}>로그인</Link>
+      <button onClick={close} className="top-[1rem] lg:top-auto">
         <span className="sr-only">닫기 버튼</span>
       </button>
+      <MobileSearch />
     </Login>
   )
 }

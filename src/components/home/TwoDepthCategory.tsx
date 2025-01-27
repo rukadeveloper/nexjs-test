@@ -5,7 +5,7 @@ import { prismaCategory, CategorySub, Category3 } from '@/app/api/category/route
 
 export default function TwoDepthCategory({ md } : { md : prismaCategory }) {
   return (
-    <div className="two__depth fixed left-[300px] w-[200px] bg-white top-0 bottom-0 border-l border-solid border-gray-100" style={{ display: 'none' }}>
+    <div className="two__depth overflow-y-auto fixed left-[300px] w-[200px] bg-white top-0 bottom-0 border-l border-solid border-gray-100" style={{ display: 'none' }}>
       {
         md.category2?.map((c2: CategorySub) => (
             <div className={`two__depth__title__${c2.secondId} border-b border-solid border-gray-100 py-8 `}>

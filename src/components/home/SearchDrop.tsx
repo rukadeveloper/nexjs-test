@@ -61,7 +61,8 @@ export default function SearchDrop() {
 
     const [searchOn, setSearchOn] = useState<boolean>(false);
     const [text,setText] = useState<string>('통합검색')
-    const searchClick = () => {
+    const searchClick = (e: React.MouseEvent) => {
+        e.preventDefault();
         setSearchOn(prev => !prev);
     }
 

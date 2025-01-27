@@ -22,8 +22,8 @@ const Btn = styled.button`
 
 export default function DropWrapper({ menu, searchOn, setSearchOn, setText, text } : { menu : searchMenuType[], searchOn: boolean, setSearchOn: Dispatch<SetStateAction<boolean>>, setText: Dispatch<SetStateAction<string>>, text: string }) {
   return (
-    <ul className={`bg-white ${!searchOn ? 'hidden' : '' }`} style={{ borderRadius: '0 0 1.3rem 1.3rem', border: '1px solid rgba(0,0,0,.15)', borderTop: 'none' }}>
-      { menu.map((m) => (<li key={m.id}><Btn className={`py-1 pl-5 w-full text-left ${m.label === text ? 'active' : ''}`} onClick={()=>{ setText(m.label); setSearchOn(false); }}>{m.label}</Btn></li>))}
+    <ul className={`bg-white relative z-10 ${!searchOn ? 'hidden' : '' }`} style={{ borderRadius: '0 0 1.3rem 1.3rem', border: '1px solid rgba(0,0,0,.15)', borderTop: 'none' }}>
+      { menu.map((m) => (<li key={m.id}><Btn className={`py-1 pl-5 w-full text-left ${m.label === text ? 'active' : ''}`} onClick={(e:React.MouseEvent)=>{ e.preventDefault(); setText(m.label); setSearchOn(false); }}>{m.label}</Btn></li>))}
     </ul>
   )
 }

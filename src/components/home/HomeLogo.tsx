@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import React from 'react';
+import { useRouter } from 'next/navigation';
 
 import styled from 'styled-components';
 
@@ -11,12 +12,18 @@ const HLogo = styled.h1`
     background: url('https://c.011st.com/img/common/sprites/sp_gnb_2x_20241128_151508.png') no-repeat;
     background-position: -163px 4px;
     background-size: 355px 313px;
-    margin-left: 1.8rem;
 `;
 
 export default function HomeLogo() {
+    const router = useRouter();
+
+    const goHome = () => {
+        router.push('/');
+    }
+    
+
     return (
-        <HLogo className="logo cursor-pointer">
+        <HLogo className="logo cursor-pointer ml-6 lg:ml-0" onClick={goHome}>
             <Link href="/">
                 <span className="sr-only">Home Logo</span>
             </Link>

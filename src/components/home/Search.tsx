@@ -47,8 +47,12 @@ export default function Search() {
         try {
             const formData = new FormData();
         
-            formData.append('wordName', searchValue);
-            formData.append('wordSeeNumber', wordSeeNumber.toString());
+            if (searchValue.length > 0) {
+                formData.append('wordName', searchValue);
+                formData.append('wordSeeNumber', wordSeeNumber.toString());
+            } else {
+                alert('검색어를 입력해주세요.');
+            }
         
             const response = await fetch('/api/searchWord', {
                 method: 'POST',
@@ -69,7 +73,7 @@ export default function Search() {
     }
 
     return (
-        <form className="search w-2/5 h-12 bg-stone-100 ml-5 border border-solid border-zinc-300 rounded-3xl flex items-center relative" onSubmit={valueSubmit}>
+        <form className="search w-2/5 h-12 bg-stone-100 ml-5 border border-solid border-zinc-300 rounded-3xl flex items-center relative hidden lg:flex" onSubmit={valueSubmit}>
             <SearchDrop />
             <InputWrapper>
                 <Input type="text" style={{ border: 'none', backgroundColor: 'transparent', boxShadow: 'none' }} onFocus={()=>{ setFocus(true); }} onBlur={() => { setFocus(false); }} onChange={changeValue} value={searchValue} />

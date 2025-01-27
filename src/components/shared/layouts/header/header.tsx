@@ -1,6 +1,7 @@
-'use client';
+"use client"
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 
 import NavigationButton from '@/components/home/NavigationButton';
 import HomeLogo from '@/components/home/HomeLogo';
@@ -13,43 +14,55 @@ import SideMenuWrapper from '@/components/home/SideMenuWrapper';
 import LoginPart from '@/components/home/LoginPart';
 import MenuPart from '@/components/home/MenuPart';
 import WordRankWrapper from '@/components/home/WordRankWrapper';
+import MenuNavigation from '@/components/home/menu/MenuNavigation';
+import SkeletonHeader from '../loading/SkeletonHeader';
 
-type Category = {
-  id: number,
-  firstCategory: string,
-  imagePositionX: string,
-  imageHoverPositionX: string,
-  imagePositionY: string,
-  imageHoverPositionY: string,
-  category2: CategorySub | null
-}
 
-type CategorySub = {
-  secondId: number,
-  secondCategory: string,
-  secondLink: string,
-  secondTitle: string,
-  categoryId: number
-}
+import { prismaCategory, CategorySub, Category3 } from '@/app/api/category/route';
+
+
 
 export default function Header() {
-    const [menuData,setMenuData] = useState<Category[]>([]);
     const [sideMenu, setSideMenu] = useState<boolean>(false);
 
-    useEffect(()=>{
-      const fetchMenuData = async () => {
-        const response = await fetch('/api/category');
-        const data = await response.json();
-        setMenuData(data);
-      }
+    const fetchMenuData = async () => {
+      const res = await fetch('/api/category');
+      const data = await res.json();
 
-      fetchMenuData();
+      return data.map((category: prismaCategory) => ({
+        id: category.id,
+        firstCategory: category.firstCategory,
+        imagePositionX: category.imagePositionX,
+        imageHoverPositionX: category.imageHoverPositionX,
+        imagePositionY: category.imagePositionY,
+        imageHoverPositionY: category.imageHoverPositionY,
+        category2: category.category2 && category.category2.map((sub: CategorySub) => ({
+          secondId: sub.secondId,
+          secondTitle: sub.secondTitle,
+          categoryId: sub.categoryId,
+          category3: sub.category3 && (sub.category3.map((s3: Category3) => ({
+              thirdId: s3.thirdId,
+              thirdLink: s3.thirdLink,
+              thirdName: s3.thirdName,
+              category2Id: s3.category2Id
+          })))
+        }))
+      }));
+    }
+    const { data : menuData , isLoading, isError, error } = useQuery({
+      queryKey: ['categoryData'],
+      queryFn: fetchMenuData,
+      refetchOnWindowFocus: false,
+      staleTime: 1000 * 60 * 5  // 5분
+    })
 
-    },[])
+    // 로딩/에러 상태 처리
+    if (isLoading) return <SkeletonHeader />;
+    if (isError) return <div>에러 발생: {error.message}</div>;
 
     return (
       <header className="border-b border-solid border-stone-100">
-        <div className="my-0 mx-auto py-5 flex items-center justify-evenly" style={{ maxWidth: '1300px'}}>
+        <div className="my-0 mx-auto py-5 flex items-center justify-between" style={{ maxWidth: '1300px'}}>
           <NavigationButton setSideMenu={setSideMenu} />
           <HomeLogo />
           <Search />
@@ -63,6 +76,9 @@ export default function Header() {
             <LoginPart setSideMenu={setSideMenu} />
             <MenuPart menuData={menuData} />
           </SideMenuWrapper>
+        </div>
+        <div className="my-0 mx-auto max-w-[1300px]">
+          <MenuNavigation />
         </div>
       </header>
     );

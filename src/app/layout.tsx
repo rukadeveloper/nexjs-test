@@ -1,11 +1,10 @@
-import type { Metadata } from 'next';
+'use client';
+
 import { Barlow } from 'next/font/google';
 import './globals.css';
+import { useState } from 'react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-export const metadata: Metadata = {
-  title: 'Go shop',
-  description: 'Welcome to GoShop',
-};
 
 const barlowFont = Barlow({
   subsets: ['latin'],
@@ -13,14 +12,29 @@ const barlowFont = Barlow({
   variable: '--font-barlow',
 });
 
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  const [queryClient] = useState(() => new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+        retry: 1
+      }
+    }
+  }));
+
   return (
     <html lang="ko" cz-shortcut-listen="true">
-      <body className={`antialiased ${barlowFont.variable}`}>{children}</body>
+      <body className={`antialiased ${barlowFont.variable}`}>
+        <QueryClientProvider client={queryClient}>
+          { children }
+        </QueryClientProvider>
+      </body>
     </html>
   );
 }
