@@ -21,14 +21,27 @@ model Category {
   imageHoverPositionX String
   imagePositionY String
   imageHoverPositionY String
-  category2 Category2? @relation("oneToTwo")
+  category2 Category2[] // 배열로 변경
 }
 
 model Category2 {
   secondId Int @id @default(autoincrement())
-  secondCategory String
-  secondLink String
   secondTitle String
-  firstRelation Category @relation("oneToTwo", fields: [categoryId], references: [id])
-  categoryId Int @unique
+  firstRelation Category @relation(fields: [categoryId], references: [id])
+  category3 Category3[] // 배열로 변경
+  categoryId Int
+}
+
+model Category3 {
+  thirdId Int @id @default(autoincrement())
+  thirdName String
+  thirdLink String
+  secondRelation Category2 @relation(fields: [category2Id], references: [secondId])
+  category2Id Int
+}
+
+model searchWord {
+  wordId Int @id @default(autoincrement())
+  wordName String @unique
+  wordSeeNumber Int
 }

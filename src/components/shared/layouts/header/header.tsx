@@ -12,6 +12,7 @@ import Cart from '@/components/home/icons/Cart';
 import SideMenuWrapper from '@/components/home/SideMenuWrapper';
 import LoginPart from '@/components/home/LoginPart';
 import MenuPart from '@/components/home/MenuPart';
+import WordRankWrapper from '@/components/home/WordRankWrapper';
 
 type Category = {
   id: number,
@@ -47,19 +48,22 @@ export default function Header() {
     },[])
 
     return (
-      <header className="my-0 mx-auto py-5 flex items-center" style={{ maxWidth: '1300px'}}>
-        <NavigationButton setSideMenu={setSideMenu} />
-        <HomeLogo />
-        <Search />
-        <IconWrapper>
-          <MyPage />
-          <Delivery />
-          <Cart />
-        </IconWrapper>
-        <SideMenuWrapper sideMenu={sideMenu}>
-          <LoginPart setSideMenu={setSideMenu} />
-          <MenuPart menuData={menuData} />
-        </SideMenuWrapper>
+      <header className="border-b border-solid border-stone-100">
+        <div className="my-0 mx-auto py-5 flex items-center justify-evenly" style={{ maxWidth: '1300px'}}>
+          <NavigationButton setSideMenu={setSideMenu} />
+          <HomeLogo />
+          <Search />
+          <WordRankWrapper />
+          <IconWrapper>
+            <MyPage />
+            <Delivery />
+            <Cart />
+          </IconWrapper>
+          <SideMenuWrapper sideMenu={sideMenu}>
+            <LoginPart setSideMenu={setSideMenu} />
+            <MenuPart menuData={menuData} />
+          </SideMenuWrapper>
+        </div>
       </header>
     );
 }

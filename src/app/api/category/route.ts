@@ -3,41 +3,61 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-type Category = {
+export type prismaCategory = {
     id: number,
     firstCategory: string,
     imagePositionX: string,
     imageHoverPositionX: string,
     imagePositionY: string,
     imageHoverPositionY: string,
-    category2: CategorySub | null
+    category2: CategorySub[]
 }
 
-type CategorySub = {
+export type CategorySub = {
     secondId: number,
-    secondCategory: string,
-    secondLink: string,
     secondTitle: string,
     categoryId: number
+    category3: Category3[]
+}
+
+export type Category3 = {
+    thirdId: number,
+    thirdName: String,
+    thirdLink: String,
+    category2Id: number
 }
 
 export async function GET() {
     try {
         const categories = await prisma.category.findMany({
             include: {
-                category2: true
+                category2: {
+                    include: {
+                        category3: true
+                    }
+                }
             }
         });
 
-        const formattedCategories = categories.map((c: Category) => ({
-            id: c.id,
-            firstCategory: c.firstCategory,
-            imagePositionX: c.imagePositionX,
-            imageHoverPositionX: c.imageHoverPositionX,
-            imagePositionY: c.imagePositionX,
-            imageHoverPositionY: c.imageHoverPositionY,
-            category2: c.category2 ? [c.category2] : []
-        }))
+        const formattedCategories = categories.map((category) => ({
+            id: category.id,
+            firstCategory: category.firstCategory,
+            imagePositionX: category.imagePositionX,
+            imageHoverPositionX: category.imageHoverPositionX,
+            imagePositionY: category.imagePositionY,
+            imageHoverPositionY: category.imageHoverPositionY,
+            category2: category.category2.map(c2 => ({
+                secondId: c2.secondId,
+                secondTitle: c2.secondTitle,
+                categoryId: c2.categoryId,
+                category3: c2.category3.map(c3 => ({
+                    thirdId: c3.thirdId,
+                    thirdName: c3.thirdName,
+                    thirdLink: c3.thirdLink,
+                    category2Id: c3.category2Id
+                }))
+            }))
+        }));
 
         return NextResponse.json(formattedCategories);
     } catch(error) {
