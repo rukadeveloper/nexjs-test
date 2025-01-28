@@ -23,7 +23,7 @@ export default function HomeLogo() {
     
 
     return (
-        <HLogo className="logo cursor-pointer ml-6 lg:ml-0" onClick={goHome}>
+        <HLogo className="logo cursor-pointer ml-0 lg:ml-6" onClick={goHome}>
             <Link href="/">
                 <span className="sr-only">Home Logo</span>
             </Link>

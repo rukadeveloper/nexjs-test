@@ -54,15 +54,32 @@ export default function Header() {
       queryFn: fetchMenuData,
       refetchOnWindowFocus: false,
       staleTime: 1000 * 60 * 5  // 5분
-    })
+    });
+
+    const fetchMenu = async () => {
+      const response = await fetch('/api/menu');
+      const data = await response.json();
+      return data;
+    }
+
+    const { data: menu, isLoading: menuLoading, isError: isMenuError, error: menuError } = useQuery({
+      queryKey: ['menu'],
+      queryFn: fetchMenu
+    });
 
     // 로딩/에러 상태 처리
-    if (isLoading) return <SkeletonHeader />;
+    if (isLoading || menuLoading) 
+      return (
+        <div>
+          <SkeletonHeader />
+          <div>로딩중...</div>
+        </div>
+      )
     if (isError) return <div>에러 발생: {error.message}</div>;
 
     return (
       <header className="border-b border-solid border-stone-100">
-        <div className="my-0 mx-auto py-5 flex items-center justify-between" style={{ maxWidth: '1300px'}}>
+        <div className="my-0 mx-auto py-5 flex justify-between lg:justify-start items-center " style={{ maxWidth: '1300px'}}>
           <NavigationButton setSideMenu={setSideMenu} />
           <HomeLogo />
           <Search />
@@ -73,12 +90,12 @@ export default function Header() {
             <Cart />
           </IconWrapper>
           <SideMenuWrapper sideMenu={sideMenu}>
-            <LoginPart setSideMenu={setSideMenu} />
+            <LoginPart setSideMenu={setSideMenu} menu={menu} />
             <MenuPart menuData={menuData} />
           </SideMenuWrapper>
         </div>
         <div className="my-0 mx-auto max-w-[1300px]">
-          <MenuNavigation />
+          <MenuNavigation menu={menu} />
         </div>
       </header>
     );

@@ -52,3 +52,17 @@ model menu {
   menuLink String
   Important Boolean
 }
+
+model User {
+  id Int @id @default(autoincrement())
+  uid String
+  upassword String
+  uname String
+  unickname String
+  uemail String
+  uphone String
+  uprofile String
+  isJoin Boolean
+  createdAt DateTime
+  DeletedAt DateTime
+}

@@ -4,10 +4,11 @@ import React, { Dispatch, SetStateAction } from 'react';
 import styled from 'styled-components';
 import MobileSearch from './MobileSearch';
 import MobileMenu from './MobileMenu';
+import { Menu } from '@/app/api/menu/route';
 
 const Login = styled.div`
   position: relative;
-  a {
+  > a {
     position: relative;
     &::after {
         content: '';
@@ -35,7 +36,7 @@ const Login = styled.div`
     }
 `;
 
-export default function LoginPart({ setSideMenu } : { setSideMenu : Dispatch<SetStateAction<boolean>> }) {
+export default function LoginPart({ setSideMenu, menu } : { setSideMenu : Dispatch<SetStateAction<boolean>>, menu: Menu[] }) {
 
   const close = () => {
     setSideMenu(false);
@@ -47,13 +48,13 @@ export default function LoginPart({ setSideMenu } : { setSideMenu : Dispatch<Set
   }
 
   return (
-    <Login className="login__part box-border p-5 h-[150px] lg:h-[70px] flex flex-col gap-5 justify-center text-xl font-bold">
+    <Login className="login__part box-border p-5 pr-0 h-[150px] lg:h-[70px] flex flex-col gap-5 justify-center text-xl font-bold">
       <Link href="/login" className="pl-8 block w-full hover:underline" onClick={notDimmed}>로그인</Link>
       <button onClick={close} className="top-[.7rem] lg:top-auto">
         <span className="sr-only">닫기 버튼</span>
       </button>
       <MobileSearch setSideMenu={setSideMenu} />
-      <MobileMenu />
+      <MobileMenu menu={menu} />
     </Login>
   )
 }

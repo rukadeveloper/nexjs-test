@@ -7,6 +7,7 @@ select * from Category2;
 select * from Category3;
 select * from searchWord;
 select * from menu;
+select * from User;
 
 insert into menu (menuName,menuLink,important) values('베스트','/best', false);
 insert into menu (menuName,menuLink,important) values('쇼킹딜','/shockingDeal', false);
@@ -17,6 +18,8 @@ insert into menu (menuName,menuLink,important) values('9900원샵','/9900Shop',t
 insert into menu (menuName,menuLink,important) values('리퍼블리','/Repbuli',true);
 insert into menu (menuName,menuLink,important) values('T공식대리점','/TOfficial',false);
 insert into menu (menuName,menuLink,important) values('아마존','/amazon',false);
+
+insert into User (uid,upassword,uname,unickname,uemail,uphone,uprofile,isJoin,createdAt,DeletedAt) values ('haste8324','1234','김세중','하루카','haste8324@naver.com','01012341234','test.jpg',false,'2024-04-04','2024-04-05');
 
 
 drop table Category;
