@@ -4,6 +4,7 @@ import { Barlow } from 'next/font/google';
 import './globals.css';
 import { useState } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { AuthContext } from '@/contexts/AuthContext';
 
 
 const barlowFont = Barlow({
@@ -28,12 +29,21 @@ export default function RootLayout({
     }
   }));
 
+  const [isAuth,setIsAuth] = useState<boolean>(false);
+
+  const value = {
+    isAuth: isAuth,
+    setIsAuth: setIsAuth
+  }
+
   return (
     <html lang="ko" cz-shortcut-listen="true">
       <body className={`antialiased ${barlowFont.variable}`}>
-        <QueryClientProvider client={queryClient}>
-          { children }
-        </QueryClientProvider>
+        <AuthContext.Provider value={value}>
+          <QueryClientProvider client={queryClient}>
+            { children }
+          </QueryClientProvider>
+        </AuthContext.Provider>
       </body>
     </html>
   );

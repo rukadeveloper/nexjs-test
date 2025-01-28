@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import HomeLogo from '../home/HomeLogo'
 import { Input } from '../ui/input';
 import { Button } from "@/components/ui/button";
@@ -8,6 +8,7 @@ import InputWrapper from './InputWrapper'
 import CheckboxWrap from '../shared/layouts/checkbox/CheckboxWrap';
 import { User } from '@/app/api/login/route';
 import { useRouter } from 'next/navigation';
+import { AuthContext, AuthType } from '@/contexts/AuthContext';
 
 type rData = {
   message: string,
@@ -56,9 +57,12 @@ const LoginBox = () => {
     setPasswordVal(e.target.value);
   }
 
+  const AuthContexts = useContext(AuthContext);
+
+  const { setIsAuth } = AuthContexts;
+
   const loginSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
 
     if(idValid && passwordValid && idVal && passwordVal) {
         const formData = new FormData();
@@ -99,8 +103,10 @@ const LoginBox = () => {
   useEffect(()=>{
     if(rData?.message === '성공') {
       go.push('/');
+      setIsAuth(true);
     } else {  
       setErrMsg(rData?.message);
+      setIsAuth(false);
     }
   },[rData])
 

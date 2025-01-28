@@ -1,10 +1,11 @@
-import { UserButton } from '@clerk/nextjs';
 import Link from 'next/link'
-import React, { Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, SetStateAction, useContext } from 'react';
+import { AuthContext } from '@/contexts/AuthContext';
 import styled from 'styled-components';
 import MobileSearch from './MobileSearch';
 import MobileMenu from './MobileMenu';
 import { Menu } from '@/app/api/menu/route';
+import { Button } from '../ui/button';
 
 const Login = styled.div`
   position: relative;
@@ -24,7 +25,7 @@ const Login = styled.div`
         background-position: -110px -290px;
     }
   }  
-  > button {
+  > button.close {
         position: absolute;
         right: 1rem;
         width: 40px;
@@ -47,10 +48,21 @@ export default function LoginPart({ setSideMenu, menu } : { setSideMenu : Dispat
     document.body.classList.remove('dimmed');
   }
 
+  const authContexts = useContext(AuthContext);
+  const { isAuth, setIsAuth } = authContexts;
+
+  const logout = () => {
+    setIsAuth(false);
+  }
+
   return (
     <Login className="login__part box-border p-5 pr-0 h-[150px] lg:h-[70px] flex flex-col gap-5 justify-center text-xl font-bold">
-      <Link href="/login" className="pl-8 block w-full hover:underline" onClick={notDimmed}>로그인</Link>
-      <button onClick={close} className="top-[.7rem] lg:top-auto">
+      { !isAuth ?
+        <Link href="/login" className="pl-8 block w-full hover:underline" onClick={notDimmed}>로그인</Link>
+        :
+        <Button className="pl-8 py-0 w-full hover:underline shadow-none text-xl font-bold flex justify-start items-center" onClick={logout} >로그아웃</Button>
+      }
+      <button onClick={close} className="top-[.7rem] lg:top-auto close">
         <span className="sr-only">닫기 버튼</span>
       </button>
       <MobileSearch setSideMenu={setSideMenu} />
