@@ -59,7 +59,7 @@ const LoginBox = () => {
 
   const AuthContexts = useContext(AuthContext);
 
-  const { setIsAuth } = AuthContexts;
+  const {setIsAuth } = AuthContexts;
 
   const loginSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -112,7 +112,7 @@ const LoginBox = () => {
 
   return (
     <form className="login__box w-[500px] h-[500px] bg-white shadow-md flex flex-col justify-center items-center p-8" onSubmit={loginSubmit}>
-      <HomeLogo />
+      <HomeLogo isPrevent />
       <InputWrapper>
         <Input type="text" placeholder="아이디 입력" className={`w-full border border-solid border-gray-100 rounded-t1-[2px] rounded-tr-[2px] p-6 placeholder-slate-400 ${idTouched ? 'border-red-700 relative after:content-[""] after:absolute after:left-0 after:right-0 after:bottom-0 after:h-[1px] after:bg-red-700' : ''}`} onFocus={idFocus} onBlur={idBlur} onChange={idChange} value={idVal} />
         <Input type="password" placeholder="비밀번호 8자~20자" className={`w-full border border-solid border-gray-100 rounded-t1-[2px] rounded-tr-[2px] p-6 placeholder-slate-400 ${passwordTouched ? 'border-red-700 rounded-t1-[0px] rounded-tr-[0px]' : ''}`} style={{ marginTop: '-1px'}} onFocus={passwordFocus} onBlur={passwordBlur} onChange={passwordChange} value={passwordVal} />

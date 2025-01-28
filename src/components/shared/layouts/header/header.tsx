@@ -81,7 +81,7 @@ export default function Header() {
       <header className="border-b border-solid border-stone-100">
         <div className="my-0 mx-auto py-5 flex justify-between lg:justify-start items-center " style={{ maxWidth: '1300px'}}>
           <NavigationButton setSideMenu={setSideMenu} />
-          <HomeLogo />
+          <HomeLogo isPrevent={false} />
           <Search />
           <WordRankWrapper />
           <IconWrapper>

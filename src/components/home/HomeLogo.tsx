@@ -14,16 +14,16 @@ const HLogo = styled.h1`
     background-size: 355px 313px;
 `;
 
-export default function HomeLogo() {
+export default function HomeLogo({ isPrevent } : { isPrevent : boolean }) {
     const router = useRouter();
 
     const goHome = () => {
-        router.push('/');
+        router.push('/')
     }
     
 
     return (
-        <HLogo className="logo cursor-pointer ml-0 lg:ml-6" onClick={goHome}>
+        <HLogo className={`logo cursor-pointer ml-0 ${!isPrevent ? 'lg:ml-6' : 'mt-8'}`} onClick={goHome}>
             <Link href="/">
                 <span className="sr-only">Home Logo</span>
             </Link>
