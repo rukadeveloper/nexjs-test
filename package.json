@@ -3,12 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-  "dev": "next dev",
-  "start": "next start",
-  "lint": "next lint",
-  "postinstall": "prisma generate",
-  "build": "prisma generate && next build",
-  "vercel-deploy": "next build && next export"
+    "dev": "next dev",
+    "start": "next start",
+    "lint": "next lint",
+    "postinstall": "prisma generate",
+    "build": "prisma generate && next build",
+    "vercel-deploy": "next build && next export",
+    "install": "npm install --legacy-peer-deps"
 },
   "dependencies": {
     "@clerk/nextjs": "^6.10.2",
