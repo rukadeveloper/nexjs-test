@@ -1,6 +1,10 @@
-import React from 'react';
+'use client';
+
+import React, { Dispatch, SetStateAction, useState } from 'react';
+import ReactDOM from 'react-dom';
 
 import styled from 'styled-components';
+import MobileSearchWrapper from './MobileSearchWrapper';
 
 const MobileButton = styled.button`
     &::after {
@@ -20,10 +24,21 @@ const MobileButton = styled.button`
     
 `;
 
-export default function MobileSearch() {
+export default function MobileSearch({ setSideMenu } : { setSideMenu : Dispatch<SetStateAction<boolean>>}) {
+
+  const [mobileSearchOpen, setMobileSearchOpen] = useState<boolean>(false);
+
+  const mobileSearchClick = () => {
+    setSideMenu(false);
+    setMobileSearchOpen(true);
+  }
+
+  const portalElement = document.querySelector('.root');
+
   return (
     <div className="mobile__search lg:hidden block">
-      <MobileButton className="pl-8 relative hover:underline">검색하기</MobileButton>
+      <MobileButton className="pl-8 relative hover:underline" onClick={mobileSearchClick}>검색하기</MobileButton>
+      {portalElement && ReactDOM.createPortal(<MobileSearchWrapper mobileSearchOpen={mobileSearchOpen} setMobileSearchOpen={setMobileSearchOpen} />, portalElement)}
     </div>
   )
 }

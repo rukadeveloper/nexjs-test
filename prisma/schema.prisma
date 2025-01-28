@@ -45,3 +45,10 @@ model searchWord {
   wordName String @unique
   wordSeeNumber Int
 }
+
+model menu {
+  menuId Int @id @default(autoincrement())
+  menuName String @unique
+  menuLink String
+  Important Boolean
+}

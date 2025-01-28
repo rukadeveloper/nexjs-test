@@ -6,6 +6,18 @@ select * from Category;
 select * from Category2;
 select * from Category3;
 select * from searchWord;
+select * from menu;
+
+insert into menu (menuName,menuLink,important) values('베스트','/best', false);
+insert into menu (menuName,menuLink,important) values('쇼킹딜','/shockingDeal', false);
+insert into menu (menuName,menuLink,important) values('슈팅 배송','/shootingDelivery', false);
+insert into menu (menuName,menuLink,important) values('쿠폰/기획전','/couponAndProduce', false);
+insert into menu (menuName,menuLink,important) values('신선식품','/freshFoods',true);
+insert into menu (menuName,menuLink,important) values('9900원샵','/9900Shop',true);
+insert into menu (menuName,menuLink,important) values('리퍼블리','/Repbuli',true);
+insert into menu (menuName,menuLink,important) values('T공식대리점','/TOfficial',false);
+insert into menu (menuName,menuLink,important) values('아마존','/amazon',false);
+
 
 drop table Category;
 drop table Category2;

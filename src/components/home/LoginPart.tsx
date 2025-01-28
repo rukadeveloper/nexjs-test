@@ -3,6 +3,7 @@ import Link from 'next/link'
 import React, { Dispatch, SetStateAction } from 'react';
 import styled from 'styled-components';
 import MobileSearch from './MobileSearch';
+import MobileMenu from './MobileMenu';
 
 const Login = styled.div`
   position: relative;
@@ -46,12 +47,13 @@ export default function LoginPart({ setSideMenu } : { setSideMenu : Dispatch<Set
   }
 
   return (
-    <Login className="login__part box-border p-5 h-[120px] lg:h-[70px] flex flex-col gap-5 justify-center text-xl font-bold">
+    <Login className="login__part box-border p-5 h-[150px] lg:h-[70px] flex flex-col gap-5 justify-center text-xl font-bold">
       <Link href="/login" className="pl-8 block w-full hover:underline" onClick={notDimmed}>로그인</Link>
-      <button onClick={close} className="top-[1rem] lg:top-auto">
+      <button onClick={close} className="top-[.7rem] lg:top-auto">
         <span className="sr-only">닫기 버튼</span>
       </button>
-      <MobileSearch />
+      <MobileSearch setSideMenu={setSideMenu} />
+      <MobileMenu />
     </Login>
   )
 }

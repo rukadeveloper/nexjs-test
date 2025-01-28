@@ -1,17 +1,28 @@
+'use client';
+
+import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link'
-import React from 'react'
+import React from 'react';
+import { Menu } from '@/app/api/menu/route';
+import MenuEach from './MenuEach';
+
+const fetchMenu = async () => {
+  const response = await fetch('/api/menu');
+  const data = await response.json();
+  return data;
+}
 
 export default function MenuNavigation() {
+  const { data: menu, isLoading: menuLoading, isError: isMenuError, error: menuError } = useQuery({
+    queryKey: ['menu'],
+    queryFn: fetchMenu
+  })
+
   return (
-    <ul className="flex items-center" style={{ fontWeight: '800', fontSize: '1.1rem' }}> 
-      <li><Link href="/" className="block py-4 px-4">베스트</Link></li>
-      <li><Link href="/" className="block py-4 px-4">쇼킹딜</Link></li>
-      <li><Link href="/" className="block py-4 px-4">슈팅 배송</Link></li>
-      <li><Link href="/" className="block py-4 px-4 relative after:content-[''] after:absolute after:right-0 after:top-1/2 after:-translate-y-[50%] after:w-[1px] after:h-[16px] after:bg-slate-400">폰 기획전</Link></li>
-      <li><Link href="/" className="block py-4 px-4">신선 식품</Link></li>
-      <li><Link href="/" className="block py-4 px-4">9900원 샵</Link></li>
-      <li><Link href="/" className="block py-4 px-4">리퍼블리</Link></li>
-      <li><Link href="/" className="block py-4 px-4">T공식대리점</Link></li>
+    <ul className="hidden lg:flex items-center gap-10" style={{ fontWeight: '800', fontSize: '1.1rem' }}> 
+      {
+        menu?.map((m: Menu) => (<MenuEach key={m.menuId} m={m} />))
+      }
     </ul>
   )
 }
