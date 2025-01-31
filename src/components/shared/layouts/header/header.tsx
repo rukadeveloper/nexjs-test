@@ -3,18 +3,18 @@
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
-import NavigationButton from '@/components/home/NavigationButton';
-import HomeLogo from '@/components/home/HomeLogo';
-import Search from '@/components/home/Search';
-import IconWrapper from '../../../home/IconWrapper';
-import MyPage from '@/components/home/icons/MyPage';
-import Delivery from '@/components/home/icons/Delivery';
-import Cart from '@/components/home/icons/Cart';
-import SideMenuWrapper from '@/components/home/SideMenuWrapper';
-import LoginPart from '@/components/home/LoginPart';
-import MenuPart from '@/components/home/MenuPart';
-import WordRankWrapper from '@/components/home/WordRankWrapper';
-import MenuNavigation from '@/components/home/menu/MenuNavigation';
+import NavigationButton from '@/components/headers/NavigationButton';
+import HomeLogo from '@/components/headers/HomeLogo';
+import Search from '@/components/headers/Search';
+import IconWrapper from '../../../headers/IconWrapper';
+import MyPage from '@/components/headers/icons/MyPage';
+import Delivery from '@/components/headers/icons/Delivery';
+import Cart from '@/components/headers/icons/Cart';
+import SideMenuWrapper from '@/components/headers/SideMenuWrapper';
+import LoginPart from '@/components/headers/LoginPart';
+import MenuPart from '@/components/headers/MenuPart';
+import WordRankWrapper from '@/components/headers/WordRankWrapper';
+import MenuNavigation from '@/components/headers/menu/MenuNavigation';
 import SkeletonHeader from '../loading/SkeletonHeader';
 
 

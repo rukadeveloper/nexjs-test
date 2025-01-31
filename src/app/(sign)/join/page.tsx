@@ -1,4 +1,4 @@
-import HomeLogo from '@/components/home/HomeLogo'
+import HomeLogo from '@/components/headers/HomeLogo'
 import Forms from '@/components/join/Forms'
 import React from 'react'
 

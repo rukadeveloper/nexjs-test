@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useContext, useEffect, useState } from 'react';
-import HomeLogo from '../home/HomeLogo'
+import HomeLogo from '../headers/HomeLogo'
 import { Input } from '../ui/input';
 import { Button } from "@/components/ui/button";
 import InputWrapper from './InputWrapper'

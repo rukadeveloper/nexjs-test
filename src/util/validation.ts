@@ -42,5 +42,9 @@ export const validationRules = {
     email: (): ValidationRule => ({
             test: (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value),
             message: `이메일 형식에 맞게 작성해주세요.`
+    }),
+    phone: (): ValidationRule => ({
+            test: (value: string) => /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/.test(value),
+            message: '휴대폰 형식에 맞게 써주세요.'
     })
 }

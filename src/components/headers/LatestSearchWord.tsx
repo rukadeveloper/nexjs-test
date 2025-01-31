@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { wordArray } from '@/app/api/searchWord/route';
 
 const Delete = styled.button`
-    
+  
 `;
 
 export default function LatestSearchWord({ allRank } : { allRank: wordArray[] }) {

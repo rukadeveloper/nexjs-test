@@ -24,6 +24,7 @@ insert into User (uid,upassword,uname,unickname,uemail,uphone,uprofile,isJoin,cr
 
 drop table Category;
 drop table Category2;
+drop table User;
 
 truncate table Category2;
 truncate table Category3;

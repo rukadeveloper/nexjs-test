@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 
+
 export type User = {
     id: number,
     uid: string,
@@ -10,7 +11,7 @@ export type User = {
     uemail: string,
     uphone: string,
     uprofile: string,
-    isJoin: boolean,
+    isJoin: string,
     createdAt: Date,
     deletedAt: Date
 }
@@ -22,7 +23,7 @@ export async function POST(req: Request) {
         const id = formData.get('id') as string;
         const password = formData.get('password') as string;
 
-        const existingData = await prisma.user.findFirst({
+        const existingData = await prisma.users.findFirst({
             where: {
                 uid: id,
                 upassword: password

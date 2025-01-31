@@ -35,6 +35,17 @@ const SearchButton = styled.button`
         transform: translateY(-50%);
         right: 0.9rem;
     }
+    &::before {
+        content: '';
+        display: block;
+        position: absolute;
+        width: 1px;
+        height: 20px;
+        background-color: rgba(0,0,0,.15);
+        top: 50%;
+        transform: translateY(-50%);
+        right: 0;
+    }
 `
 
 const menu: searchMenuType[] = [
@@ -76,7 +87,7 @@ export default function SearchDrop() {
     },[])
 
     return (
-        <div className="search__drop w-2/6 text-sm relative h-full">
+        <div className="search__drop w-2/6 text-[0.95rem] relative h-full">
             <DropAll ref={dropRef}>
                 <SearchButton onClick={searchClick} className={`${searchOn ? 'clicked' : ''} pl-5 h-full`} >{text}</SearchButton>
                 <DropWrapper menu={menu} searchOn={searchOn} setText={setText} text={text} setSearchOn={setSearchOn} />
