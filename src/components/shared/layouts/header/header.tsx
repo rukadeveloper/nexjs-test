@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { prismaCategory } from '@/app/api/category/route';
 import { Menu } from '@/app/api/menu/route';
@@ -17,36 +17,39 @@ import LoginPart from '@/components/headers/LoginPart';
 import MenuPart from '@/components/headers/MenuPart';
 import WordRankWrapper from '@/components/headers/WordRankWrapper';
 import MenuNavigation from '@/components/headers/menu/MenuNavigation';
-import SkeletonWrapper from '../loading/SkeletonWrapper';
-import { useQuery } from '@tanstack/react-query';
-
-const fetchCategory = async () : Promise<prismaCategory[]> => {
-  const res = await fetch(`/api/category`);
-  const data: prismaCategory[] = await res.json();
-  return data;
-}
-
-const fetchMenu = async () : Promise<Menu[]> => {
-  const res = await fetch(`/api/menu`);
-  const data : Menu[] = await res.json();
-  return data;
-}
+import SkeletonWrapper from '../Skeleton/SkeletonWrapper';
 
 export default function Header() {
 
     const [sideMenu, setSideMenu] = useState<boolean>(false);
-    
-    const { data: category, isLoading: cateLoading, isError: isCateError, error: cateError } = useQuery({
-      queryKey: ['categoryData'],
-      queryFn: fetchCategory
-    })
+    const [category,setCategory] = useState<prismaCategory[]>([]);
+    const [menu,setMenu] = useState<Menu[]>([]);
 
-    const { data: menu, isLoading: menuLoading, isError: isMenuError, error: menuError } = useQuery({
-      queryKey: ['menuData'],
-      queryFn: fetchMenu
-    });
+    useEffect(()=>{
+      const fetchCategory = async () : Promise<void> => {
+        const res = await fetch('/api/category');
+        const data = await res.json();
+        console.log(data);
+        setCategory(data);
+      }
 
-    if(cateLoading && menuLoading) return <SkeletonWrapper />
+      fetchCategory();
+    },[])
+
+    useEffect(()=>{
+      const fetchMenu = async () : Promise<void> => {
+        const res = await fetch('/api/menu');
+        const data = await res.json();
+        console.log(data);
+        setMenu(data);
+      }
+
+      fetchMenu();
+    },[])
+
+    if(menu.length === 0 && category.length === 0) {
+      return <SkeletonWrapper />
+    }
 
     return (
       <header className="border-b border-solid border-stone-100">
@@ -61,12 +64,12 @@ export default function Header() {
             <Cart />
           </IconWrapper>
           <SideMenuWrapper sideMenu={sideMenu}>
-            <LoginPart setSideMenu={setSideMenu} menu={menu!} />
-            <MenuPart category={category!} />
+            <LoginPart setSideMenu={setSideMenu} menu={menu} />
+            <MenuPart category={category} />
           </SideMenuWrapper>
         </div>
         <div className="my-0 mx-auto max-w-[1300px]">
-          <MenuNavigation menu={menu!} />
+          <MenuNavigation menu={menu} />
         </div>
       </header>
     );

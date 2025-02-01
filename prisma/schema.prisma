@@ -58,16 +58,41 @@ model menu {
   Important Boolean
 }
 
-model Users {
-  id Int @id @default(autoincrement())
-  uid String
-  upassword String
+model Account {
+  id String @id @default(cuid())
+  userId String
+  provider String
+  providerAccountId String
+  access_token String
+  refresh_token String? @db.Text
+  expires_at Int?
+  session_state String
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id String @id @default(cuid())
+  sessionToken String @unique
+  userId String
+  expires DateTime
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id String @id @default(cuid())
+  uid String @unique
   uname String
   unickname String
-  uemail String
+  uemail String @unique 
   uphone String
   uprofile String
-  isJoin String
+  isDeleted String
   createdAt DateTime
-  DeletedAt DateTime
+  deletedAt DateTime
+  accounts Account[]
+  sessions Session[]
+  hashedPassword String?
 }

@@ -8,7 +8,7 @@ export default function TwoDepthCategory({ md } : { md : prismaCategory }) {
     <div className="two__depth overflow-y-auto fixed left-[300px] w-[200px] bg-white top-0 bottom-0 border-l border-solid border-gray-100" style={{ display: 'none' }}>
       {
         md.category2?.map((c2: CategorySub) => (
-            <div className={`two__depth__title__${c2.secondId} border-b border-solid border-gray-100 py-8 `}>
+            <div key={c2.secondId} className={`two__depth__title__${c2.secondId} border-b border-solid border-gray-100 py-8 `}>
                 <h2 className="text-gray-500 font-bold pl-6 pb-2">{c2.secondTitle}</h2>
                 <ul>
                     {
