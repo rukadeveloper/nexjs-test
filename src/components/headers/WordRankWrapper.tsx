@@ -10,7 +10,7 @@ export default function WordRankWrapper() {
 
   useEffect(()=> {
       const timer = setInterval(() => {
-          setHeight( prev => (prev + 24) );
+          if(wordData.length > 0) setHeight( prev => (prev + 24) );
       },2000);
 
       if(height === 24 * (wordData?.length)) {
@@ -34,12 +34,16 @@ export default function WordRankWrapper() {
   },[])
 
   return (
-    <div className="word__rank__wrapper h-[24px] w-[240px] lg:block hidden  overflow-hidden ml-4">
+    <div className="word__rank__wrapper h-[24px] w-[240px] lg:flex hidden overflow-hidden ml-4 items-center">
       <div className="move" style={{ marginTop: `-${height}px`, transition: 'all .4s' }}>
       {
-        wordData?.map((wd) => (
-          <WordRank wd={wd} />
-        ))
+        wordData.length > 0 ? 
+        (
+          wordData?.map((wd: wordArray) => (<WordRank key={wd.wordId} wd={wd} />))
+        ) :
+        (
+          <div className="text-sm text-red-700">Loading...</div>
+        )
       }
       </div>
     </div>

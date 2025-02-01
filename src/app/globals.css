@@ -8,3 +8,14 @@ body.dimmed::after {
   inset: 0;
   background-color: rgba(0, 0, 0, .25);
 }
+
+@font-face {
+  font-family: 'Gyeonggi_Title_Light';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2410-3@1.0/Title_Light.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+}
+
+.gyeonggi {
+  font-family: 'Gyeonggi_Title_Light', sans-serif;
+}

@@ -43,7 +43,12 @@ model Category3 {
 model searchWord {
   wordId Int @id @default(autoincrement())
   wordName String @unique
-  wordSeeNumber Int
+  wordViews Int
+  originalRanking Int
+  changedRanking Int
+  searchCategoryNum Int
+  createdAt DateTime
+  deletedAt DateTime
 }
 
 model menu {

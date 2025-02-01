@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import styled from 'styled-components';
 
 import SearchDrop from './SearchDrop';
@@ -19,37 +19,76 @@ const SearchBtn = styled.button`
     background-position: -162px -45px;
 `;
 
+type Word = {
+    wordName: string,
+    wordViews: number,
+    originalRanking: number,
+    changedRanking: number,
+    searchCategoryNum: number,
+    createdAt: Date,
+    deletedAt: Date
+}
+
+type Action = 
+            | { type: "change_value", val: string }
+            | { type: "change_views" }
+            | { type: "change_ranking" }
+
+const searchReducer : React.Reducer<Word, Action> = (state, action) => {
+    switch(action.type) {
+        case "change_value":
+            return {...state, wordName: action.val }
+        case "change_views": 
+            return {...state, wordViews: state.wordViews + 1 }
+        default:
+            return state;
+    }
+}
+
 export default function Search() {
-    const [focus,setFocus] = useState<boolean>(false);
-    const [searchValue,setSearchValue] = useState<string>('');
-    const [wordSeeNumber, setWordSeeNumber] = useState<number>(1);
+    const [focus, setFocus] = useState<boolean>(false);
     const [allRank,setAllRank] = useState<wordArray[]>([]);
+
+    const [searchInfo, dispatch] = useReducer(searchReducer,{
+        wordName: '',
+        wordViews: 0,
+        originalRanking: 1,
+        changedRanking: 1,
+        searchCategoryNum: 1,
+        createdAt: new Date(),
+        deletedAt: new Date()
+    })
 
     useEffect(()=>{
         const fetcha = async () => {
             const res = await fetch('/api/searchWord');
             const data = await res.json();
-            setAllRank(data);
+            if(data.length > 0) setAllRank(data);
         }
 
         fetcha();
     },[])
 
     const changeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchValue(e.target.value);
+        dispatch({ type: 'change_value', val: e.target.value })
     }
 
     const valueSubmit : React.FormEventHandler<HTMLFormElement> = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        setWordSeeNumber(prev => prev + 1);
+        dispatch({ type: 'change_views' });
 
         try {
             const formData = new FormData();
         
-            if (searchValue.length > 0) {
-                formData.append('wordName', searchValue);
-                formData.append('wordSeeNumber', wordSeeNumber.toString());
+            if (searchInfo.wordName.trim().length > 0) {
+                formData.append('wordName', searchInfo.wordName);
+                formData.append('wordViews', searchInfo.wordViews.toString());
+                formData.append('originalRanking', searchInfo.originalRanking.toString());
+                formData.append('changedRanking', searchInfo.changedRanking.toString());
+                formData.append('searchCategoryNum', searchInfo.searchCategoryNum.toString());
+                formData.append('createdAt', searchInfo.createdAt.toString());
+                formData.append('deletedAt', searchInfo.deletedAt.toString())
             } else {
                 alert('검색어를 입력해주세요.');
             }
@@ -58,9 +97,9 @@ export default function Search() {
                 method: 'POST',
                 body: formData
             });
-        
+       
             if (response.ok) {
-                setSearchValue(''); // 성공적으로 응답을 받은 경우 입력 필드 초기화
+                dispatch({ type: 'change_value' , val: '' })
             } else {
                 // 응답이 실패한 경우 에러 처리
                 const errorData = await response.json();
@@ -76,7 +115,7 @@ export default function Search() {
         <form className="search w-2/5 h-12 bg-stone-100 ml-5 border border-solid border-zinc-300 rounded-3xl flex items-center relative hidden lg:flex" onSubmit={valueSubmit}>
             <SearchDrop />
             <InputWrapper>
-                <Input type="text" style={{ border: 'none', backgroundColor: 'transparent', boxShadow: 'none' }} onFocus={()=>{ setFocus(true); }} onBlur={() => { setFocus(false); }} onChange={changeValue} value={searchValue} />
+                <Input type="text" placeholder="검색어를 입력해주세요." className="border-none bg-transparent placeholder:text-gray-500 shadow-none" onFocus={()=>{ setFocus(true); }} onBlur={() => { setFocus(false); }} onChange={changeValue} value={searchInfo.wordName} />
             </InputWrapper>
             <ButtonWrapper>
                 <SearchBtn type="submit">

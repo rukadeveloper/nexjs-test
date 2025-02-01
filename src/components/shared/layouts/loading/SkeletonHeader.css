@@ -2,7 +2,8 @@
 .logo__anime,
 .input__anime,
 .rank__anime,
-.icon__anime {
+.icon__anime,
+.menu__anime {
     animation: common 1s infinite alternate;
 }
 

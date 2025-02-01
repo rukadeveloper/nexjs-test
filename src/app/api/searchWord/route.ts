@@ -1,31 +1,22 @@
 import { NextResponse } from "next/server";
-import { PrismaClient } from '@prisma/client';
+import prisma from "@/lib/prisma";
+import { parseISO } from "date-fns";
 
-const prisma = new PrismaClient({
-    log: [
-        { emit: 'event', level: 'query' },
-        { emit: 'stdout', level: 'error' },
-        { emit: 'stdout', level: 'info' },
-        { emit: 'stdout', level: 'warn' }
-    ]
-});
-
-// 쿼리 이벤트 리스너 추가
-prisma.$on('query', (e) => {
-    console.log('Query: ' + e.query);
-    console.log('Params: ' + e.params);
-    console.log('Duration: ' + e.duration + 'ms');
-});
 
 export type wordArray = {
     wordId: number,
     wordName: string,
-    wordSeeNumber: string
+    wordViews: number,
+    originalRanking: number,
+    changedRanking: number,
+    searchCategoryNum: number,
+    createdAt: Date,
+    deletedAt: Date
 }
 
 export async function GET() {
     try {
-        const wordArray = await prisma.searchWord.findMany();
+        const wordArray = await prisma.searchWord?.findMany();
 
         return NextResponse.json(wordArray);
     } catch(err) {
@@ -37,9 +28,12 @@ export async function POST(req: Request) {
     try {
         const formData = await req.formData();
         const wordName = formData.get('wordName') as string;
-        const wordSeeNumber = formData.get('wordSeeNumber') as string;
-
-        const seeNumber = parseInt(wordSeeNumber);
+        const wordViews = formData.get('wordViews') as string;
+        const originalRanking = formData.get('originalRanking') as string;
+        const changedRanking = formData.get('changedRanking') as string;
+        const searchCategoryNum = formData.get('searchCategoryNum') as string;
+        const createdAt = formData.get('createdAt') as string;
+        const deletedAt = formData.get('deletedAt') as string;
 
         const existingWord = await prisma.searchWord.findFirst({
             where : {
@@ -51,7 +45,12 @@ export async function POST(req: Request) {
             const newWord = await prisma.searchWord.create({
                 data: {
                     wordName: wordName,
-                    wordSeeNumber: seeNumber
+                    wordViews: parseInt(wordViews),
+                    originalRanking: parseInt(originalRanking),
+                    changedRanking: parseInt(changedRanking),
+                    searchCategoryNum: parseInt(searchCategoryNum),
+                    createdAt: parseISO(createdAt),
+                    deletedAt: parseISO(deletedAt)
                 }
             });
 
@@ -63,7 +62,7 @@ export async function POST(req: Request) {
                     wordName: wordName
                 }, 
                 data: {
-                    wordSeeNumber: seeNumber
+                    wordViews: parseInt(wordViews)
                 }
             });
 

@@ -50,7 +50,7 @@ const Real = styled.div`
     }
 `;
 
-export default function CategoryReal({ menuData } : { menuData : prismaCategory[] }) {
+export default function CategoryReal({ category } : { category : prismaCategory[] }) {
   const [hover,setHover] = useState<boolean>(false);
 
   const onLiHover = () => {
@@ -66,7 +66,7 @@ export default function CategoryReal({ menuData } : { menuData : prismaCategory[
       <h2 className="text-xl font-bold pb-4 pl-10 pt-4">카테고리</h2>
       <ul className="pl-10 relative z-30">
         {
-          menuData.map((md) => (
+          category?.map((md) => (
             <li key={md.id} className={`${hover && 'active'}`} onMouseEnter={onLiHover} onMouseLeave={onLiLeave}>
               <button className="pl-10 w-full py-4 text-left" style={{ '--positionX' : `${md.imagePositionX}`, '--positionY' : `${md.imagePositionY}`, '--hoverPositionX': `${md.imageHoverPositionX}`, '--hoverPositionY': `${md.imageHoverPositionY}` } as React.CSSProperties }>{md.firstCategory}</button>
               <TwoDepthCategory md={md} />
